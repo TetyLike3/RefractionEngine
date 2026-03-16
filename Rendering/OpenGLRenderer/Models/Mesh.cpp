@@ -5,16 +5,16 @@ Mesh::Mesh(vector<sVertex> vertices, vector<unsigned int> indices, vector<BaseTe
 	m_indices = indices;
 	m_textures = textures;
 
-	setupMesh();
+	SetupMesh();
 }
 
 void Mesh::Draw(BaseShader& shader) {
 	unsigned int diffuseIndex = 1;
 	unsigned int specularIndex = 1;
 	for (unsigned int i = 0; i < m_textures.size(); i++) {
-		m_textures[i].activate(i);
+		m_textures[i].Activate(i);
 		std::string number;
-		std::string name = m_textures[i].getTextureType();
+		std::string name = m_textures[i].GetTextureType();
 		if (name == "texDiffuse")
 			number = std::to_string(diffuseIndex++);
 		else if (name == "texSpecular")
@@ -29,7 +29,7 @@ void Mesh::Draw(BaseShader& shader) {
 	glBindVertexArray(0);
 }
 
-void Mesh::setupMesh() {
+void Mesh::SetupMesh() {
 	// Create buffers
 	glGenVertexArrays(1, &m_VAO);
 	glGenBuffers(1, &m_VBO);

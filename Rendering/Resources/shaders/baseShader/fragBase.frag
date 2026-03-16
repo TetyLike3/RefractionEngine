@@ -26,5 +26,6 @@ void main() {
 	vec3 norm = normalize(Normal);
 	vec3 viewDir = normalize(ubo.viewPos - FragPos);
 	
-	gDiffuseSpecular.rgb = texture(texDiffuse1, TexCoord).rgb;
+	//gDiffuseSpecular.rgb = texture(texDiffuse1, TexCoord).rgb;
+	gDiffuseSpecular.rgb = vec3(1,1,1);
 }

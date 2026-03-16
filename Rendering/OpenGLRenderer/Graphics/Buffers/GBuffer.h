@@ -6,9 +6,9 @@ class GBuffer : public BaseBuffer {
 public:
 	enum GBUFFER_TEXTURE_TYPE {
 		GBUFFER_TEXTURE_POSITION,
-		GBUFFER_TEXTURE_NORMAL,
 		GBUFFER_TEXTURE_DIFFUSE,
-		GBUFFER_TEXTURE_SMR,
+		GBUFFER_TEXTURE_NORMAL,
+		GBUFFER_TEXTURE_TEXCOORD,
 		GBUFFER_iTEXTURECOUNT
 	};
 
@@ -17,11 +17,9 @@ public:
 
 	bool Init(unsigned int viewWidth, unsigned int viewHeight);
 
-	void StartFrame();
-	void BindGeomPass();
-	void BindStencilPass();
-	void BindLightPass();
-	void BindFinalPass();
+	void BindForWrite();
+	void BindForRead();
+	void SetReadBuffer(GBUFFER_TEXTURE_TYPE texType);
 private:
 	GLuint m_fbo;
 	GLuint m_textures[GBUFFER_iTEXTURECOUNT];

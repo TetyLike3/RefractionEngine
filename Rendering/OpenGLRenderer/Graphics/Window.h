@@ -19,15 +19,15 @@ class Window
 public:
 	Window();
 
-	int init(Settings::Window windowSettings);
+	int Init(Settings::Window windowSettings);
 
-	void updateLoop();
+	void UpdateLoop();
 
-	void cleanup();
+	void Cleanup();
 
-	GLFWwindow* getWindow() { return m_pWindow; }
-	Camera* getCurrentCamera() { return m_pCurrentCamera; }
-	void setCurrentCamera(Camera* pNewCamera) { m_pCurrentCamera = pNewCamera; }
+	GLFWwindow* GetWindow() { return m_pWindow; }
+	Camera* GetCurrentCamera() { return m_pCurrentCamera; }
+	void SetCurrentCamera(Camera* pNewCamera) { m_pCurrentCamera = pNewCamera; }
 
 	bool m_framebufferResized = false;
 private:
@@ -35,5 +35,5 @@ private:
 
 	GLFWwindow* m_pWindow = nullptr;
 
-	void drawFrame();
+	void DrawFrame();
 };

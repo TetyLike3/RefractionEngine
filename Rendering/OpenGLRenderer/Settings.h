@@ -13,7 +13,7 @@ public:
 	Graphics graphics;
 	class Window {
 	public:
-		const char* windowTitle = "DefaultTitle";
+		const char* windowTitle = "Game";
 		int windowWidth = 1280;
 		int windowHeight = 720;
 	};

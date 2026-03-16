@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include "../../Utilities.h"
+#include "Log.h"
 
 class BaseBuffer {
 public:

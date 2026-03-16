@@ -159,6 +159,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Rendering\OpenGLRenderer\Models\Pipeline.cpp" />
+    <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Techniques\GeomPassTech.cpp" />
+    <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Techniques\LightingTechnique.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Buffers\BaseBuffer.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Buffers\GBuffer.cpp" />
@@ -175,8 +178,13 @@
     <ClCompile Include="Rendering\OpenGLRenderer\Utilities.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Buffers\UniformBufferObject.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Models\Transform.cpp" />
+    <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Techniques\BaseTechnique.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Rendering\OpenGLRenderer\Models\Pipeline.h" />
+    <ClInclude Include="Rendering\OpenGLRenderer\Constants.h" />
+    <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Techniques\GeomPassTech.h" />
+    <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Techniques\LightingTechnique.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Buffers\BaseBuffer.h" />
     <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Buffers\GBuffer.h" />
@@ -194,19 +202,21 @@
     <ClInclude Include="Rendering\OpenGLRenderer\Utilities.h" />
     <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Buffers\UniformBufferObject.h" />
     <ClInclude Include="Rendering\OpenGLRenderer\Models\Transform.h" />
+    <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Techniques\BaseTechnique.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Resources\shaders\baseShader\fragBase.frag" />
     <None Include="Rendering\Resources\shaders\baseShader\vertBase.vert" />
     <None Include="Rendering\Resources\shaders\depthShader\fragDepth.frag" />
     <None Include="Rendering\Resources\shaders\depthShader\vertDepth.vert" />
-    <None Include="Rendering\Resources\shaders\lightingPassShader\fragLightingPass.frag" />
-    <None Include="Rendering\Resources\shaders\lightingPassShader\vertLightingPass.vert" />
+    <None Include="Rendering\Resources\shaders\fragLighting.frag" />
+    <None Include="Rendering\Resources\shaders\geomPassShader\vertGeomPass.vert" />
     <None Include="Rendering\Resources\shaders\lightShader\fragLight.frag" />
     <None Include="Rendering\Resources\shaders\lightShader\vertLight.vert" />
     <None Include="Rendering\Resources\shaders\postprocessing\filmGrain.frag" />
     <None Include="Rendering\Resources\shaders\stencilPassShader\fragStencilPass.frag" />
     <None Include="Rendering\Resources\shaders\stencilPassShader\vertStencilPass.vert" />
+    <None Include="Rendering\Resources\shaders\geomPassShader\fragGeomPass.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

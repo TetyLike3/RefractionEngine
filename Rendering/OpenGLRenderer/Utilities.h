@@ -15,7 +15,8 @@ class Utilities
 {
 public:
 	static std::string EngineWorkingDirectory;
-	static std::vector<char> readFile(const std::string& filename);
+	static std::vector<char> ReadFile(const std::string& filename);
+	static bool ReadFile(const std::string& filename, std::string& buffer); // Writes contents of file to provided string
 
 	static std::vector<fs::directory_entry> getFilesInFolder(fs::path folderPath);
 	static std::vector<fs::directory_entry> getFilesOfExtInFolder(fs::path folderPath, std::string ext);

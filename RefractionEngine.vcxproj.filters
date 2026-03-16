@@ -63,6 +63,18 @@
     <ClCompile Include="Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Techniques\BaseTechnique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Techniques\LightingTechnique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Techniques\GeomPassTech.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\OpenGLRenderer\Models\Pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rendering\OpenGLRenderer\OpenGLRenderer.h">
@@ -116,6 +128,21 @@
     <ClInclude Include="Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Techniques\BaseTechnique.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Techniques\LightingTechnique.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Techniques\GeomPassTech.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\OpenGLRenderer\Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\OpenGLRenderer\Models\Pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Resources\shaders\postprocessing\filmGrain.frag" />
@@ -125,9 +152,10 @@
     <None Include="Rendering\Resources\shaders\lightShader\vertLight.vert" />
     <None Include="Rendering\Resources\shaders\baseShader\fragBase.frag" />
     <None Include="Rendering\Resources\shaders\baseShader\vertBase.vert" />
-    <None Include="Rendering\Resources\shaders\lightingPassShader\vertLightingPass.vert" />
-    <None Include="Rendering\Resources\shaders\lightingPassShader\fragLightingPass.frag" />
     <None Include="Rendering\Resources\shaders\stencilPassShader\fragStencilPass.frag" />
     <None Include="Rendering\Resources\shaders\stencilPassShader\vertStencilPass.vert" />
+    <None Include="Rendering\Resources\shaders\fragLighting.frag" />
+    <None Include="Rendering\Resources\shaders\geomPassShader\vertGeomPass.vert" />
+    <None Include="Rendering\Resources\shaders\geomPassShader\fragGeomPass.frag" />
   </ItemGroup>
 </Project>

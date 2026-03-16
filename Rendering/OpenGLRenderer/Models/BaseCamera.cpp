@@ -1,8 +1,9 @@
 #include "BaseCamera.h"
 
 BaseCamera::BaseCamera() {
-	m_pTransform = new Transform();
-	m_pTransform->Translate(glm::vec3(0.0f, 0.0f, 3.0f));
+	m_Transform = Transform();
+	m_Transform.Translate(glm::vec3(0.0f, 0.0f, 3.0f));
+	m_cameraTarget = m_Transform.position + m_Transform.GetForwardVector();
 
 	m_yaw = 0.0f;
 	m_pitch = 0.0f;
@@ -19,9 +20,9 @@ void BaseCamera::move(glm::vec3 dirInput, glm::vec3 angInput) {
 
 	// Move camera
 	glm::vec3 translateDelta = glm::vec3();
-	if (abs(dirInput.z) > 0.0f) translateDelta += (dirInput.z * m_cameraSpeed) * m_pTransform->GetForwardVector();
-	if (abs(dirInput.y) > 0.0f) translateDelta += m_pTransform->GetUpVector() * (dirInput.y * m_cameraSpeed);
-	if (abs(dirInput.x) > 0.0f) translateDelta += m_pTransform->GetRightVector() * (dirInput.x * m_cameraSpeed);
+	if (abs(dirInput.z) > 0.0f) translateDelta += (dirInput.z * m_cameraSpeed) * m_Transform.GetForwardVector();
+	if (abs(dirInput.y) > 0.0f) translateDelta += m_Transform.GetUpVector() * (dirInput.y * m_cameraSpeed);
+	if (abs(dirInput.x) > 0.0f) translateDelta += m_Transform.GetRightVector() * (dirInput.x * m_cameraSpeed);
 
 	// Rotate camera
 	m_yaw += angInput.y * m_cameraSensitivity;
@@ -32,8 +33,10 @@ void BaseCamera::move(glm::vec3 dirInput, glm::vec3 angInput) {
 	rotateDelta.y = sin(glm::radians(m_pitch));
 	rotateDelta.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
 
-	m_pTransform->Translate(translateDelta);
-	//m_pTransform->Rotate(rotateDelta);
-	Log::Info("Moved camera by " + std::to_string(translateDelta.x) + ", " + std::to_string(translateDelta.y) + ", " + std::to_string(translateDelta.z));
+	m_Transform.Translate(translateDelta);
+	//m_Transform.Rotate(rotateDelta);
+	//Log::Info("Moved camera by " + std::to_string(translateDelta.x) + ", " + std::to_string(translateDelta.y) + ", " + std::to_string(translateDelta.z));
 	//Log::Info("Rotated camera by " + std::to_string(rotateDelta.x) + ", " + std::to_string(rotateDelta.y) + ", " + std::to_string(rotateDelta.z));
+
+	m_cameraTarget = m_Transform.position + m_Transform.GetForwardVector();
 }

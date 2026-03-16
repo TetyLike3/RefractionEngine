@@ -7,7 +7,7 @@ void framebufferResizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-int Window::init(Settings::Window windowSettings) {
+int Window::Init(Settings::Window windowSettings) {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -29,14 +29,14 @@ int Window::init(Settings::Window windowSettings) {
 	glfwSetFramebufferSizeCallback(m_pWindow, framebufferResizeCallback);
 }
 
-void Window::updateLoop() {
-	drawFrame();
+void Window::UpdateLoop() {
+	DrawFrame();
 }
 
-void Window::cleanup() {
+void Window::Cleanup() {
 	glfwTerminate();
 }
 
 
-void Window::drawFrame() {
+void Window::DrawFrame() {
 }

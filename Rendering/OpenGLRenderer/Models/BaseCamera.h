@@ -15,7 +15,7 @@
 class BaseCamera
 {
 public:
-	Transform* m_pTransform;
+	Transform m_Transform;
 
 	BaseCamera();
 

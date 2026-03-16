@@ -1,7 +1,7 @@
 #include "BaseModel.h"
 
 void BaseModel::DrawModel() {
-	m_pShader->activate();
+	m_pShader->Activate();
 	m_pShader->setUniformMat4("modelTransform", m_pTransform->GetTransform());
 
 	for (auto& mesh : m_meshes) 
@@ -9,7 +9,7 @@ void BaseModel::DrawModel() {
 	//Log::Info("Drawn for model" + sourcePath);
 }
 
-void BaseModel::loadModel(std::string path) {
+void BaseModel::LoadModel(std::string path) {
 	Log::Info("Loading model " + path);
 
 	Assimp::Importer import;
@@ -21,21 +21,21 @@ void BaseModel::loadModel(std::string path) {
 	}
 	sourcePath = path.substr(0, path.find_last_of("/"));
 	Log::Info("Parsing scene data...");
-	processNode(scene->mRootNode, scene);
+	ProcessNode(scene->mRootNode, scene);
 }
 
-void BaseModel::processNode(aiNode* node, const aiScene* scene) {
+void BaseModel::ProcessNode(aiNode* node, const aiScene* scene) {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++) {
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		m_meshes.push_back(processMesh(mesh, scene));
+		m_meshes.push_back(ProcessMesh(mesh, scene));
 	}
 
 	for (unsigned int i = 0; i < node->mNumChildren; i++) {
-		processNode(node->mChildren[i], scene);
+		ProcessNode(node->mChildren[i], scene);
 	}
 }
 
-Mesh BaseModel::processMesh(aiMesh* mesh, const aiScene* scene) {
+Mesh BaseModel::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
 	std::vector<sVertex> vertices;
 	std::vector<unsigned int> indices;
 	std::vector<BaseTexture> textures;
@@ -67,10 +67,10 @@ Mesh BaseModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 
 	if (mesh->mMaterialIndex >= 0) {
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-		vector<BaseTexture> diffuseMaps = loadMaterialTextures(material,
+		vector<BaseTexture> diffuseMaps = LoadMaterialTextures(material,
 			aiTextureType_DIFFUSE, "texDiffuse");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-		vector<BaseTexture> specularMaps = loadMaterialTextures(material,
+		vector<BaseTexture> specularMaps = LoadMaterialTextures(material,
 			aiTextureType_SPECULAR, "texSpecular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
@@ -78,7 +78,7 @@ Mesh BaseModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 	return Mesh(vertices, indices, textures);
 }
 
-vector<BaseTexture> BaseModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
+vector<BaseTexture> BaseModel::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
 	vector<BaseTexture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
@@ -90,7 +90,7 @@ vector<BaseTexture> BaseModel::loadMaterialTextures(aiMaterial* mat, aiTextureTy
 		bool skip = false;
 		for (unsigned int j = 0; j < m_textures.size(); j++)
 		{
-			if (std::strcmp(m_textures[j].getSourcePath().data(), fullPath.data()) == 0)
+			if (std::strcmp(m_textures[j].GetSourcePath().data(), fullPath.data()) == 0)
 			{
 				textures.push_back(m_textures[j]);
 				skip = true;

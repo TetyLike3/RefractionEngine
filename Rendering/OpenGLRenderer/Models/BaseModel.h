@@ -26,7 +26,7 @@ public:
 	BaseModel(std::string modelSourcePath) {
 		m_pTransform = new Transform();
 		m_pShader = new BaseShader();
-		loadModel(modelSourcePath);
+		LoadModel(modelSourcePath);
 	};
 
 	void DrawModel();
@@ -34,8 +34,8 @@ private:
 	std::vector<Mesh> m_meshes;
 	std::vector<BaseTexture> m_textures;
 
-	void loadModel(std::string path);
-	void processNode(aiNode *node, const aiScene *scene);
-	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-	vector<BaseTexture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+	void LoadModel(std::string path);
+	void ProcessNode(aiNode *node, const aiScene *scene);
+	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+	vector<BaseTexture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 };

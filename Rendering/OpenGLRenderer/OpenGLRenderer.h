@@ -8,17 +8,20 @@
 #include <GLAD/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Constants.h"
 #include "Log.h"
 #include "Utilities.h"
 #include "Settings.h"
 #include "Graphics/Window.h"
 #include "Graphics/BaseShader.h"
+#include "Models/Pipeline.h"
 #include "Models/BaseModel.h"
 #include "Models/BaseCamera.h"
 #include "Models/BaseLight.h"
 #include "Models/PointLight.h"
 #include "Graphics/Buffers/UniformBufferObject.h"
 #include "Graphics/Buffers/GBuffer.h"
+#include "Graphics/Techniques/GeomPassTech.h"
 
 
 enum class OpenGLRendererState
@@ -41,25 +44,22 @@ struct sSettings {
 class OpenGLRenderer
 {
 public:
-	static OpenGLRenderer* getInstance();
-	static void destroyInstance();
-	OpenGLRendererState getState() { return m_state; }
-	Window* getWindow() { return m_pWindow; }
-	BaseCamera* getCamera() { return m_pCamera; }
-	int init(Settings* initSettings);
+	static OpenGLRenderer* GetInstance();
+	static void DestroyInstance();
+	OpenGLRendererState GetState() { return m_state; }
+	Window* GetWindow() { return m_pWindow; }
+	BaseCamera* GetCamera() { return m_pCamera; }
+	int Init(Settings* initSettings);
 private:
 	OpenGLRenderer();
-	void loadShaders();
-	void mainLoop();
-	void updateUniformBuffers();
-	void cleanup();
+	void LoadShaders();
+	void MainLoop();
+	void UpdateUniformBuffers();
+	void Cleanup();
 
 	// Deferred shading functions
 	void DSPassGeometry();
-	void DSPassStencil(PointLight* pPointLight);
-	void DSPassPointLight(PointLight* pPointLight);
-	void DSPassDirectionalLight();
-	void DSPassFinal();
+	void DSPassLighting();
 
 	static OpenGLRenderer* m_pInstance;
 	OpenGLRendererState m_state = OpenGLRendererState::NONE;
@@ -69,6 +69,7 @@ private:
 	UniformBufferObject* m_pUBO = nullptr;
 	BaseShader* m_pLightingPassShader = nullptr;
 	GBuffer* m_pGBuffer = nullptr;
+	GeomPassTech m_GeomPassTech;
 
 	BaseCamera* m_pCamera = nullptr;
 	vector<PointLight*> m_pScenePointLights = {};

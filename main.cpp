@@ -23,13 +23,13 @@ bool firstMouseInput = true;
 
 void enableInputProcessing(OpenGLRenderer* pRenderer)
 {
-	Window* pWindow = pRenderer->getWindow();
-	GLFWwindow* pGLFWWindow = pWindow->getWindow();
-	BaseCamera* pCamera = pRenderer->getCamera();
+	Window* pWindow = pRenderer->GetWindow();
+	GLFWwindow* pGLFWWindow = pWindow->GetWindow();
+	BaseCamera* pCamera = pRenderer->GetCamera();
 
 	glfwSetInputMode(pGLFWWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-	while (pRenderer->getState() == OpenGLRendererState::RUNNING) {
+	while (pRenderer->GetState() == OpenGLRendererState::RUNNING) {
 		// Process inputs
 		if (glfwGetKey(pGLFWWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 			glfwSetWindowShouldClose(pGLFWWindow, GLFW_TRUE);
@@ -75,7 +75,7 @@ void enableInputProcessing(OpenGLRenderer* pRenderer)
 void runRenderer(OpenGLRenderer* pRenderer) {
 	try
 	{
-		pRenderer->init(settings);
+		pRenderer->Init(settings);
 	}
 	catch (const std::exception& e)
 	{
@@ -83,7 +83,7 @@ void runRenderer(OpenGLRenderer* pRenderer) {
 		system("pause");
 	}
 
-	OpenGLRenderer::destroyInstance();
+	OpenGLRenderer::DestroyInstance();
 }
 
 int main() {
@@ -93,11 +93,11 @@ int main() {
 	settings->window.windowHeight = 1080;
 
 	std::cout << "Starting render thread...\n";
-	OpenGLRenderer* pOpenGLRenderer = OpenGLRenderer::getInstance();
+	OpenGLRenderer* pOpenGLRenderer = OpenGLRenderer::GetInstance();
 	std::thread renderThread(runRenderer, pOpenGLRenderer);
 	
 	// Wait for rendering engine to start running
-	while (pOpenGLRenderer->getState() != OpenGLRendererState::RUNNING) {
+	while (pOpenGLRenderer->GetState() != OpenGLRendererState::RUNNING) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 
@@ -106,7 +106,7 @@ int main() {
 	std::thread inputThread(enableInputProcessing, pOpenGLRenderer);
 	
 	// Wait for rendering engine to clean up before exiting
-	while (pOpenGLRenderer->getState() != OpenGLRendererState::EXIT) {
+	while (pOpenGLRenderer->GetState() != OpenGLRendererState::EXIT) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 	

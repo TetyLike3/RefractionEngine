@@ -39,13 +39,13 @@ public:
 		stbi_image_free(data);
 	};
 
-	void activate(unsigned int unitOffset) {
+	void Activate(unsigned int unitOffset) {
 		glActiveTexture(GL_TEXTURE0 + unitOffset);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 	}
 
-	std::string getTextureType() { return m_textureType; };
-	std::string getSourcePath() { return m_sourcePath; };
+	std::string GetTextureType() { return m_textureType; };
+	std::string GetSourcePath() { return m_sourcePath; };
 
 private:
 	unsigned int m_texture;

@@ -11,7 +11,7 @@ string Utilities::m_lastMessagePrinted = "";
 // Needs a NUL terminator, otherwise operations like shader compilation will find junk characters at the end of the file
 const char* fileTerminator = "\0";
 
-vector<char> Utilities::readFile(const string& filename)
+vector<char> Utilities::ReadFile(const string& filename)
 {
 	std::ifstream file(filename, std::ios::ate | std::ios::binary);
 
@@ -29,6 +29,16 @@ vector<char> Utilities::readFile(const string& filename)
 
 	return buffer;
 };
+
+bool Utilities::ReadFile(const string& filename, string& buffer) {
+	vector<char> charBuf;
+	try {
+		charBuf = ReadFile(filename);
+	} catch (...) {
+		return false;
+	}
+	buffer = string(charBuf.begin(), charBuf.end());
+}
 
 vector<directory_entry> Utilities::getFilesInFolder(path folderPath)
 {

@@ -38,8 +38,8 @@ public:
 		string vertPath = vertShader.path().string();
 		string fragPath = fragShader.path().string();
 
-		vector<char> vertSource = Utilities::readFile(vertPath);
-		vector<char> fragSource = Utilities::readFile(fragPath);
+		vector<char> vertSource = Utilities::ReadFile(vertPath);
+		vector<char> fragSource = Utilities::ReadFile(fragPath);
 
 		const char* pVertSource = vertSource.data();
 		const char* pFragSource = fragSource.data();
@@ -73,7 +73,7 @@ public:
 	string m_name;
 
 
-	void activate() {
+	void Activate() {
 		glUseProgram(m_ID);
 	}
 
