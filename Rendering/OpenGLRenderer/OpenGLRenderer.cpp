@@ -97,7 +97,7 @@ int OpenGLRenderer::Init(Settings* initSettings) {
 
 	Log::Info("Creating uniform buffer object...");
 	float aspectRatio = VIEW_WIDTH / static_cast<float>(VIEW_HEIGHT);
-	projectionMatrix = glm::perspective(glm::radians(70.0f), aspectRatio, m_currentSettings.graphics.clipPlaneNear, m_currentSettings.graphics.clipPlaneFar);
+	projectionMatrix = glm::perspective(glm::radians(m_pCamera->FOVy), aspectRatio, m_currentSettings.graphics.clipPlaneNear, m_currentSettings.graphics.clipPlaneFar);
 	sUBO initData = {
 		m_pCamera->m_Transform.GetTransform(),
 		m_pCamera->m_Transform.position,
@@ -111,11 +111,11 @@ int OpenGLRenderer::Init(Settings* initSettings) {
 	testModel->m_pTransform->Translate(glm::vec3(0.0f, 0.0f, 10.0f));
 	LoadedModels.push_back(testModel);
 
-	BaseModel* groundPlane = new BaseModel("./Rendering/Resources/models/Primitives/primitivePlane.obj");
-	groundPlane->m_pShader = m_pGeomPassShader;
-	groundPlane->m_pTransform->Translate(glm::vec3(0.0f, -10.0f, 0.0f));
-	groundPlane->m_pTransform->Scale(glm::vec3(10.0f));
-	LoadedModels.push_back(groundPlane);
+	BaseModel* testModel2 = new BaseModel("./Rendering/Resources/models/survivalBackpack/backpack.obj");
+	testModel2->m_pShader = m_pGeomPassShader;
+	testModel2->m_pTransform->Translate(glm::vec3(0.0f, -10.0f, 0.0f));
+	testModel2->m_pTransform->Scale(glm::vec3(10.0f));
+	LoadedModels.push_back(testModel2);
 	
 	Log::Info("Initialisation complete");
 
@@ -181,9 +181,16 @@ void OpenGLRenderer::MainLoop() {
 			// [Geometry Pass] //
 			//-----------------//
 			DSPassGeometry();
-			renderQuad();
-			DSPassLighting();
+			//renderQuad();
+			//DSPassLighting();
+
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			
+			m_pGBuffer->BindForRead();
+			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+			glBlitFramebuffer(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 0, 0, VIEW_WIDTH, VIEW_HEIGHT, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 			// [Finalise Tick] //
 			//-----------------//
 			glfwSwapBuffers(windowInstance);
@@ -195,13 +202,10 @@ void OpenGLRenderer::MainLoop() {
 }
 
 void OpenGLRenderer::UpdateUniformBuffers() {
-	glm::mat4 viewMatrix = m_pCamera->m_Transform.GetTransform();
-	glm::vec3 viewPos = m_pCamera->m_Transform.position;
-	sUBO newData = {
-		viewMatrix,
-		viewPos,
-		projectionMatrix
-	};
+	sUBO newData{};
+	newData.viewMatrix = m_pCamera->m_Transform.GetTransform();
+	newData.viewPosition = m_pCamera->m_Transform.position;
+	newData.perspectiveMatrix = projectionMatrix;
 	m_pUBO->UploadNewData(newData);
 }
 
@@ -215,7 +219,7 @@ void OpenGLRenderer::Cleanup() {
 // Deferred Shading
 
 void OpenGLRenderer::DSPassGeometry() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_pGBuffer->BindAny();
 	m_pGeomPassShader->Activate();
 
@@ -223,6 +227,7 @@ void OpenGLRenderer::DSPassGeometry() {
 	for (int i = 0; i < LoadedModels.size(); i++) {
 		LoadedModels[i]->DrawModel();
 	}
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void OpenGLRenderer::DSPassLighting() {

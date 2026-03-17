@@ -16,6 +16,7 @@ class BaseCamera
 {
 public:
 	Transform m_Transform;
+	float FOVy = 70.0f;
 
 	BaseCamera();
 

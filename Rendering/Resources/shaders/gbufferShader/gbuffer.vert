@@ -14,6 +14,8 @@ out vec3 FragPos;
 out vec2 TexCoords;
 out vec3 Normal;
 
+uniform mat4 modelTransform;
+
 void main()
 {
     vec4 worldPos = modelTransform * vec4(aPos, 1.0);
