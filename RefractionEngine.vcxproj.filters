@@ -66,6 +66,9 @@
     <ClCompile Include="Rendering\OpenGLRenderer\Graphics\BaseTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rendering\OpenGLRenderer\Models\InstancedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rendering\OpenGLRenderer\OpenGLRenderer.h">
@@ -122,19 +125,18 @@
     <ClInclude Include="Rendering\OpenGLRenderer\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rendering\OpenGLRenderer\Models\InstancedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Resources\shaders\postprocessing\filmGrain.frag" />
-    <None Include="Rendering\Resources\shaders\depthShader\vertDepth.vert" />
-    <None Include="Rendering\Resources\shaders\depthShader\fragDepth.frag" />
-    <None Include="Rendering\Resources\shaders\lightShader\fragLight.frag" />
-    <None Include="Rendering\Resources\shaders\lightShader\vertLight.vert" />
     <None Include="Rendering\Resources\shaders\baseShader\fragBase.frag" />
     <None Include="Rendering\Resources\shaders\baseShader\vertBase.vert" />
-    <None Include="Rendering\Resources\shaders\stencilPassShader\fragStencilPass.frag" />
-    <None Include="Rendering\Resources\shaders\stencilPassShader\vertStencilPass.vert" />
     <None Include="Rendering\Resources\shaders\fragLighting.frag" />
     <None Include="Rendering\Resources\shaders\gbufferShader\gbuffer.frag" />
     <None Include="Rendering\Resources\shaders\gbufferShader\gbuffer.vert" />
+    <None Include="Rendering\Resources\shaders\lightShader\light.frag" />
+    <None Include="Rendering\Resources\shaders\lightShader\light.vert" />
   </ItemGroup>
 </Project>

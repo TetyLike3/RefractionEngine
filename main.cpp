@@ -91,6 +91,8 @@ int main() {
 
 	settings->window.windowWidth = 1280;
 	settings->window.windowHeight = 720;
+	settings->controls.cameraSensitivity = 3.0f;
+	settings->controls.cameraSpeed = 0.2f;
 
 	std::cout << "Starting render thread...\n";
 	OpenGLRenderer* pOpenGLRenderer = OpenGLRenderer::GetInstance();

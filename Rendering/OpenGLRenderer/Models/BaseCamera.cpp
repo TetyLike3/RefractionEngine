@@ -29,16 +29,13 @@ void BaseCamera::Move(glm::vec3 dirInput, glm::vec3 angInput) {
 	m_yaw += angInput.y * m_cameraSensitivity;
 	m_pitch = std::clamp(m_pitch + angInput.x * m_cameraSensitivity, -80.0f, 80.0f);
 
-	glm::vec3 rotateDelta = glm::vec3();
-	rotateDelta.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-	rotateDelta.y = sin(glm::radians(m_pitch));
-	rotateDelta.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-
-	m_yaw = 0;
-	m_pitch = 0;
+	glm::vec3 targetRotation = glm::vec3();
+	targetRotation.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+	targetRotation.y = sin(glm::radians(m_pitch));
+	targetRotation.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
 
 	m_Transform.Translate(translateDelta);
-	//m_Transform.Rotate(rotateDelta);
+	m_Transform.orientation = glm::quatLookAt(targetRotation, glm::vec3(0,1,0));
 	//Log::Info("Moved camera by " + std::to_string(translateDelta.x) + ", " + std::to_string(translateDelta.y) + ", " + std::to_string(translateDelta.z));
 	//Log::Info("Rotated camera by " + std::to_string(rotateDelta.x) + ", " + std::to_string(rotateDelta.y) + ", " + std::to_string(rotateDelta.z));
 

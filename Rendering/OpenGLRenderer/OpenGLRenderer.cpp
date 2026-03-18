@@ -7,7 +7,7 @@
 
 #define VIEW_WIDTH this->m_currentSettings.window.windowWidth
 #define VIEW_HEIGHT this->m_currentSettings.window.windowHeight
-constexpr auto FPS_INTERVAL = 50;
+constexpr auto FPS_INTERVAL = 500;
 
 OpenGLRenderer* OpenGLRenderer::m_pInstance = nullptr;
 
@@ -108,12 +108,15 @@ int OpenGLRenderer::Init(Settings* initSettings) {
 	Log::Info("Creating test model...");
 	BaseModel* testModel = new BaseModel("./Rendering/Resources/models/survivalBackpack/backpack.obj");
 	testModel->m_pShader = m_pGeomPassShader;
-	testModel->m_pTransform->Translate(glm::vec3(0.0f, 0.0f, -30.0f));
+	testModel->m_pTransform->Translate(glm::vec3(0.0f, 0.0f, -10.0f));
 	LoadedModels.push_back(testModel);
 
-	BaseModel* testModel2 = new BaseModel("./Rendering/Resources/models/survivalBackpack/backpack.obj");
+	InstancedModel* testModel2 = new InstancedModel("./Rendering/Resources/models/survivalBackpack/backpack.obj");
 	testModel2->m_pShader = m_pGeomPassShader;
-	testModel2->m_pTransform->Translate(glm::vec3(0.0f, 0.0f, 30.0f));
+	testModel2->m_pTransform->Translate(glm::vec3(0.0f, 0.0f, 10.0f));
+	testModel2->AddInstance(glm::vec3(0.0f, 5.0f, 0.0f));
+	testModel2->AddInstance(glm::vec3(0.0f, 10.0f, 0.0f));
+	testModel2->AddInstance(glm::vec3(0.0f, -5.0f, 0.0f));
 	LoadedModels.push_back(testModel2);
 	
 	Log::Info("Initialisation complete");
@@ -165,10 +168,10 @@ void OpenGLRenderer::MainLoop() {
 		if (fpsPrintDelta > FPS_INTERVAL) {
 			fpsPrintDelta = 0;
 			Log::Info(std::to_string(m_elapsedRenderTime) + " elapsed | " + std::to_string(m_deltaRenderTime) + " delta | " + Utilities::calculateFPS(m_deltaRenderTime, 2) + "FPS");
-			auto cameraPos = m_pCamera->m_Transform.position;
-			Log::Info("Camera pos: " + Log::ToString(cameraPos));
-			auto cameraForward = m_pCamera->m_Transform.GetForwardVector();
-			Log::Info("Camera forward: " + Log::ToString(cameraForward));
+			//auto cameraPos = m_pCamera->m_Transform.position;
+			//Log::Info("Camera pos: " + Log::ToString(cameraPos));
+			//auto cameraForward = m_pCamera->m_Transform.GetForwardVector();
+			//Log::Info("Camera forward: " + Log::ToString(cameraForward));
 		};
 		fpsPrintDelta += m_deltaRenderTime;
 
@@ -184,7 +187,6 @@ void OpenGLRenderer::MainLoop() {
 			// [Geometry Pass] //
 			//-----------------//
 			DSPassGeometry();
-			//renderQuad();
 			DSPassLighting();
 			DSPassFinal();
 

@@ -4,8 +4,7 @@ void BaseModel::DrawModel() {
 	m_pShader->Activate();
 	m_pShader->setUniformMat4("modelTransform", m_pTransform->GetTransform());
 
-	for (auto& mesh : m_meshes) 
-		mesh.Draw(*m_pShader);
+	DrawMeshesRaw();
 	//Log::Info("Drawn for model" + sourcePath);
 }
 
@@ -105,4 +104,9 @@ vector<BaseTexture*> BaseModel::LoadMaterialTextures(aiMaterial* mat, aiTextureT
 		}
 	}
 	return textures;
+}
+
+void BaseModel::DrawMeshesRaw() {
+	for (auto& mesh : m_meshes)
+		mesh.Draw(*m_pShader);
 }

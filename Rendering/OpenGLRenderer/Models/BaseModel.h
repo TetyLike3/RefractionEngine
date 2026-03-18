@@ -29,7 +29,11 @@ public:
 		LoadModel(modelSourcePath);
 	};
 
-	void DrawModel();
+	virtual void DrawModel();
+
+protected:
+	void DrawMeshesRaw();
+
 private:
 	std::vector<Mesh> m_meshes;
 	std::vector<BaseTexture*> m_textures;

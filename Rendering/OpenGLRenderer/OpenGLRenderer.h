@@ -15,6 +15,7 @@
 #include "Graphics/Window.h"
 #include "Graphics/BaseShader.h"
 #include "Models/BaseModel.h"
+#include "Models/InstancedModel.h"
 #include "Models/BaseCamera.h"
 #include "Models/BaseLight.h"
 #include "Models/PointLight.h"

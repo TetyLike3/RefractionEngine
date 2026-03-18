@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -160,6 +160,7 @@ XCOPY "$(ProjectDir)Rendering\Resources\shaders" "$(TargetDir)Rendering\Resource
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Rendering\OpenGLRenderer\Models\InstancedModel.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Graphics\BaseTexture.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Buffers\BaseBuffer.cpp" />
@@ -179,6 +180,7 @@ XCOPY "$(ProjectDir)Rendering\Resources\shaders" "$(TargetDir)Rendering\Resource
     <ClCompile Include="Rendering\OpenGLRenderer\Models\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Rendering\OpenGLRenderer\Models\InstancedModel.h" />
     <ClInclude Include="Rendering\OpenGLRenderer\Constants.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Rendering\OpenGLRenderer\Graphics\Buffers\BaseBuffer.h" />
@@ -201,16 +203,12 @@ XCOPY "$(ProjectDir)Rendering\Resources\shaders" "$(TargetDir)Rendering\Resource
   <ItemGroup>
     <None Include="Rendering\Resources\shaders\baseShader\fragBase.frag" />
     <None Include="Rendering\Resources\shaders\baseShader\vertBase.vert" />
-    <None Include="Rendering\Resources\shaders\depthShader\fragDepth.frag" />
-    <None Include="Rendering\Resources\shaders\depthShader\vertDepth.vert" />
     <None Include="Rendering\Resources\shaders\fragLighting.frag" />
     <None Include="Rendering\Resources\shaders\gbufferShader\gbuffer.frag" />
     <None Include="Rendering\Resources\shaders\gbufferShader\gbuffer.vert" />
-    <None Include="Rendering\Resources\shaders\lightShader\fragLight.frag" />
-    <None Include="Rendering\Resources\shaders\lightShader\vertLight.vert" />
+    <None Include="Rendering\Resources\shaders\lightShader\light.frag" />
+    <None Include="Rendering\Resources\shaders\lightShader\light.vert" />
     <None Include="Rendering\Resources\shaders\postprocessing\filmGrain.frag" />
-    <None Include="Rendering\Resources\shaders\stencilPassShader\fragStencilPass.frag" />
-    <None Include="Rendering\Resources\shaders\stencilPassShader\vertStencilPass.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
