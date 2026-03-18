@@ -397,3 +397,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /.idea/.idea.RefractionEngine/.idea
+
+# Don't ignore resources
+!/Rendering/Resources/**/*.obj
