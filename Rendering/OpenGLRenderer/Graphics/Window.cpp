@@ -27,6 +27,7 @@ int Window::Init(Settings::Window windowSettings) {
 
 	glViewport(0, 0, windowSettings.windowWidth, windowSettings.windowHeight);
 	glfwSetFramebufferSizeCallback(m_pWindow, framebufferResizeCallback);
+	return 0;
 }
 
 void Window::UpdateLoop() {

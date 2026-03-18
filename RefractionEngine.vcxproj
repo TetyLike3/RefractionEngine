@@ -113,13 +113,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>M:\_lib\.OpenGL-Resources\Include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Libs\Include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>M:\_lib\.OpenGL-Resources\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Libs\Build\x64_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>assimp.lib;glfw3.lib;DbgHelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <SubSystem>Console</SubSystem>
@@ -161,6 +161,7 @@ XCOPY "$(ProjectDir)Rendering\Resources\shaders" "$(TargetDir)Rendering\Resource
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Rendering\OpenGLRenderer\Graphics\BaseTexture.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Buffers\BaseBuffer.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Graphics\Buffers\GBuffer.cpp" />
     <ClCompile Include="Rendering\OpenGLRenderer\Models\PointLight.cpp" />

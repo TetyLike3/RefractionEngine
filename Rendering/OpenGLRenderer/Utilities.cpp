@@ -38,6 +38,7 @@ bool Utilities::ReadFile(const string& filename, string& buffer) {
 		return false;
 	}
 	buffer = string(charBuf.begin(), charBuf.end());
+	return true;
 }
 
 vector<directory_entry> Utilities::getFilesInFolder(path folderPath)

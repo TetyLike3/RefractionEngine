@@ -38,7 +38,7 @@ void BaseModel::ProcessNode(aiNode* node, const aiScene* scene) {
 Mesh BaseModel::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
 	std::vector<sVertex> vertices;
 	std::vector<unsigned int> indices;
-	std::vector<BaseTexture> textures;
+	std::vector<BaseTexture*> textures;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
 		sVertex vertex;
@@ -67,19 +67,19 @@ Mesh BaseModel::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
 
 	if (mesh->mMaterialIndex >= 0) {
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-		vector<BaseTexture> diffuseMaps = LoadMaterialTextures(material,
-			aiTextureType_DIFFUSE, "texDiffuse");
+		vector<BaseTexture*> diffuseMaps = LoadMaterialTextures(material,
+			aiTextureType_DIFFUSE, REFRACT_TEXTURE_TYPE_DIFFUSE);
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-		vector<BaseTexture> specularMaps = LoadMaterialTextures(material,
-			aiTextureType_SPECULAR, "texSpecular");
+		vector<BaseTexture*> specularMaps = LoadMaterialTextures(material,
+			aiTextureType_SPECULAR, REFRACT_TEXTURE_TYPE_SPECULAR);
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
 	return Mesh(vertices, indices, textures);
 }
 
-vector<BaseTexture> BaseModel::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
-	vector<BaseTexture> textures;
+vector<BaseTexture*> BaseModel::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
+	vector<BaseTexture*> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		aiString str;
@@ -90,7 +90,7 @@ vector<BaseTexture> BaseModel::LoadMaterialTextures(aiMaterial* mat, aiTextureTy
 		bool skip = false;
 		for (unsigned int j = 0; j < m_textures.size(); j++)
 		{
-			if (std::strcmp(m_textures[j].GetSourcePath().data(), fullPath.data()) == 0)
+			if (std::strcmp(m_textures[j]->GetSourcePath().data(), fullPath.data()) == 0)
 			{
 				textures.push_back(m_textures[j]);
 				skip = true;
@@ -99,7 +99,7 @@ vector<BaseTexture> BaseModel::LoadMaterialTextures(aiMaterial* mat, aiTextureTy
 		}
 
 		if (!skip) {
-			BaseTexture texture = BaseTexture(fullPath, typeName);
+			BaseTexture* texture = BaseTexture::LoadTexture(fullPath, typeName);
 			textures.push_back(texture);
 			m_textures.push_back(texture);
 		}

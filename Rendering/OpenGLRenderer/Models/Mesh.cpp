@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(vector<sVertex> vertices, vector<unsigned int> indices, vector<BaseTexture> textures) {
+Mesh::Mesh(vector<sVertex> vertices, vector<unsigned int> indices, vector<BaseTexture*> textures) {
 	m_vertices = vertices;
 	m_indices = indices;
 	m_textures = textures;
@@ -12,12 +12,12 @@ void Mesh::Draw(BaseShader& shader) {
 	unsigned int diffuseIndex = 1;
 	unsigned int specularIndex = 1;
 	for (unsigned int i = 0; i < m_textures.size(); i++) {
-		m_textures[i].Activate(i);
+		m_textures[i]->Activate(i);
 		std::string number;
-		std::string name = m_textures[i].GetTextureType();
-		if (name == "texDiffuse")
+		std::string name = m_textures[i]->GetTextureType();
+		if (name == REFRACT_TEXTURE_TYPE_DIFFUSE)
 			number = std::to_string(diffuseIndex++);
-		else if (name == "texSpecular")
+		else if (name == REFRACT_TEXTURE_TYPE_SPECULAR)
 			number = std::to_string(specularIndex++);
 
 		shader.setUniformInt(name + number, i);

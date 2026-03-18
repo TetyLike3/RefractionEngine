@@ -59,6 +59,7 @@ BaseShader* getShaderByName(const std::string name) {
 			return shader;
 		}
 	}
+	throw std::runtime_error("Could not get shader of name " + name);
 }
 
 std::vector<unsigned int> VAOs = {};

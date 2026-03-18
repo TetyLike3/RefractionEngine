@@ -32,10 +32,10 @@ public:
 	void DrawModel();
 private:
 	std::vector<Mesh> m_meshes;
-	std::vector<BaseTexture> m_textures;
+	std::vector<BaseTexture*> m_textures;
 
 	void LoadModel(std::string path);
 	void ProcessNode(aiNode *node, const aiScene *scene);
 	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
-	vector<BaseTexture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+	vector<BaseTexture*> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 };
