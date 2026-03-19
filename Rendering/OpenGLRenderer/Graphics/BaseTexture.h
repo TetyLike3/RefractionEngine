@@ -23,15 +23,15 @@ public:
 	static BaseTexture* LoadTexture(std::string texturePath, std::string textureType);
 	void Activate(unsigned int unitOffset);
 
-	std::string GetTextureType() { return m_textureType; };
+	std::string GetTextureType() { return mTextureType; };
 	std::string GetSourcePath() { return mSourcePath; };
 
 private:
 	BaseTexture(std::string texturePath, std::string textureType);
 
-	unsigned int m_texture;
+	unsigned int mTexture;
 	std::string mSourcePath;
-	std::string m_textureType;
+	std::string mTextureType;
 };
 
 #endif

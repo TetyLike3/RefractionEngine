@@ -12,8 +12,18 @@ void Transform::Translate(vec3 delta) {
 	position += delta;
 }
 
+void Transform::Rotate(float angle, vec3 axis) {
+	auto rotQ = glm::angleAxis(angle, axis);
+	auto conjQ = glm::conjugate(rotQ);
+	orientation = rotQ * orientation * conjQ;
+}
+
 void Transform::Rotate(vec3 delta) {
-	orientation *= glm::quat(delta);
+	orientation = glm::normalize(orientation * glm::quat(delta));
+}
+
+void Transform::Rotate(glm::quat delta) {
+	orientation *= delta;
 }
 
 void Transform::Scale(vec3 delta) {

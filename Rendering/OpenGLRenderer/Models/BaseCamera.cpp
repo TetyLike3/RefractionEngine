@@ -2,7 +2,8 @@
 
 BaseCamera::BaseCamera() {
 	m_Transform = Transform();
-	m_Transform.Translate(glm::vec3(0.0f, 0.0f, -3.0f));
+	m_Transform.Translate(glm::vec3(0.0f, 0.0f, -5.0f));
+	m_Transform.Rotate(glm::vec3(0.0f,glm::radians(180.0f),0.0f));
 	m_cameraTarget = m_Transform.position + m_Transform.GetForwardVector();
 
 	m_yaw = 0.0f;

@@ -8,10 +8,10 @@ std::unordered_map<string, BaseTexture*> LoadedTextures;
 
 BaseTexture::BaseTexture(string texturePath, string textureType) {
 	mSourcePath = texturePath;
-	m_textureType = textureType;
+	mTextureType = textureType;
 
-	glGenTextures(1, &m_texture);
-	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glGenTextures(1, &mTexture);
+	glBindTexture(GL_TEXTURE_2D, mTexture);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -42,5 +42,5 @@ BaseTexture* BaseTexture::LoadTexture(string texturePath, string textureType) {
 
 void BaseTexture::Activate(unsigned int unitOffset) {
 	glActiveTexture(GL_TEXTURE0 + unitOffset);
-	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glBindTexture(GL_TEXTURE_2D, mTexture);
 }

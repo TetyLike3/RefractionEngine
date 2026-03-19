@@ -17,7 +17,9 @@ public:
 	Transform();
 
 	void Translate(glm::vec3 delta);
+	void Rotate(float angle, glm::vec3 axis);
 	void Rotate(glm::vec3 delta);
+	void Rotate(glm::quat delta);
 	void Scale(glm::vec3 delta);
 
 	glm::mat4 GetTransform() const;

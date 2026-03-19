@@ -162,6 +162,7 @@ void OpenGLRenderer::MainLoop() {
 			glfwSwapBuffers(windowInstance);
 		}
 		glfwPollEvents();
+		mLoadedScene->Tick(mDeltaRenderTime/1000);
 	}
 
 	mInstance->Cleanup();

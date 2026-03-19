@@ -92,6 +92,10 @@ string Log::ToString(glm::vec3 vector) {
 	return ("x" + std::to_string(vector.x) + " y" + std::to_string(vector.y) + " z" + std::to_string(vector.z));
 }
 
+string Log::ToString(glm::quat quaternion) {
+	return ("x" + std::to_string(quaternion.x) + " y" + std::to_string(quaternion.y) + " z" + std::to_string(quaternion.z) + " w" + std::to_string(quaternion.w));
+}
+
 string Log::ToString(glm::mat4 matrix, bool pretty) {
 	string out = "";
 	if (pretty) {

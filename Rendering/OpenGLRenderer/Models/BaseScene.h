@@ -15,6 +15,9 @@ public:
 	BaseScene();
 	
 	void LoadFromFile(std::string path);
+	void Tick(float deltaTime);
 private:
 	std::string mSourcePath = "";
+
+	BaseModel* mNyen = nullptr;
 };
