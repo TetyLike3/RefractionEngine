@@ -51,6 +51,7 @@ public:
 	Window* GetWindow() { return mWindow; }
 	BaseCamera* GetCamera() { return mCamera; }
 	int Init(Settings* initSettings);
+	void ToggleWireframe();
 private:
 	OpenGLRenderer();
 	void MainLoop();
@@ -76,6 +77,7 @@ private:
 	BaseScene* mLoadedScene = nullptr;
 
 	bool mShouldRender = true;
+	bool mWireframeMode = false;
 	double mStartRenderTime = 0.0f;
 	double mElapsedRenderTime = 0.0f;
 	double mDeltaRenderTime = 0.0f;

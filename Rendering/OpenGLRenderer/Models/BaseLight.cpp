@@ -6,9 +6,9 @@ BaseLight::BaseLight() {
 }
 
 void BaseLight::UpdateShaderUniforms(unsigned int index) {
-	const float linear = 1.0f;
-	const float quadratic = 1.2f;
-	const float radius = 80.0f;
+	const float linear = 0.2f;
+	const float quadratic = 0.2f;
+	const float radius = 200.0f;
 	mLightShader->setUniformVec3("lights[" + std::to_string(index) + "].Position", mTransform->position);
 	mLightShader->setUniformVec3("lights[" + std::to_string(index) + "].Color", mLightColor);
 	mLightShader->setUniformFloat("lights[" + std::to_string(index) + "].Linear", linear);

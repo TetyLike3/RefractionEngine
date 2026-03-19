@@ -42,8 +42,8 @@ void BaseScene::LoadFromFile(std::string path) {}
 
 void BaseScene::Tick(float deltaTime) {
 	auto yawDiff = glm::radians(360.0f) * deltaTime;
-	Log::Info("Yaw diff: " + std::to_string(yawDiff));
-	Log::Info("Nyen orientation: " + Log::ToString(mNyen->mTransform->orientation));
+	//Log::Info("Yaw diff: " + std::to_string(yawDiff));
+	//Log::Info("Nyen orientation: " + Log::ToString(mNyen->mTransform->orientation));
 	mNyen->mTransform->Rotate(yawDiff, vec3(0,1,0));
 	//mNyen->mTransform->Rotate(vec3(0.0f,yawDiff,0.0f));
 	

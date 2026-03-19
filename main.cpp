@@ -15,11 +15,14 @@ struct sInput {
 	bool keyD = false;
 	bool keyQ = false;
 	bool keyE = false;
+	bool keyP = false;
 	double lastMouseX = settings->window.windowWidth / 2;
 	double lastMouseY = settings->window.windowHeight / 2;
 };
 sInput input;
 bool firstMouseInput = true;
+
+bool pKeyDebounce = false;
 
 void enableInputProcessing(OpenGLRenderer* pRenderer)
 {
@@ -41,6 +44,7 @@ void enableInputProcessing(OpenGLRenderer* pRenderer)
 		input.keyD = (glfwGetKey(pGLFWWindow, GLFW_KEY_D) == GLFW_PRESS);
 		input.keyQ = (glfwGetKey(pGLFWWindow, GLFW_KEY_Q) == GLFW_PRESS);
 		input.keyE = (glfwGetKey(pGLFWWindow, GLFW_KEY_E) == GLFW_PRESS);
+		input.keyP = (glfwGetKey(pGLFWWindow, GLFW_KEY_P) == GLFW_PRESS);
 
 		glm::vec3 dirInput = glm::vec3(0.0f);
 		if (input.keyW) dirInput.z = 1;
@@ -49,6 +53,14 @@ void enableInputProcessing(OpenGLRenderer* pRenderer)
 		if (input.keyD) dirInput.x = 1;
 		if (input.keyQ) dirInput.y = -1;
 		if (input.keyE) dirInput.y = 1;
+
+		if (!pKeyDebounce && input.keyP) {
+			pRenderer->ToggleWireframe();
+			pKeyDebounce = true;
+		}
+		else if (pKeyDebounce && !input.keyP) {
+			pKeyDebounce = false;
+		}
 
 		glm::vec3 angInput = glm::vec3(0.0f);
 		double currentMouseX, currentMouseY;

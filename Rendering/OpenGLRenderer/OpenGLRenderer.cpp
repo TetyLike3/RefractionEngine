@@ -175,6 +175,11 @@ void OpenGLRenderer::UpdateUniformBuffers() {
 	mUBO->UploadNewData(newData);
 }
 
+void OpenGLRenderer::ToggleWireframe() {
+	mWireframeMode = !mWireframeMode;
+	Log::Info("Toggled wireframe mode");
+}
+
 void OpenGLRenderer::Cleanup() {
 	mState = OpenGLRendererState::CLEANUP;
 	Log::Info("Cleaning up...");
@@ -189,11 +194,19 @@ void OpenGLRenderer::DSPassGeometry() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	mGeomPassShader->Activate();
 
+	if (mWireframeMode) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+
 	// Draw models
 	for (int i = 0; i < mLoadedScene->mModels.size(); i++) {
 		mLoadedScene->mModels[i]->DrawModel();
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	if (mWireframeMode) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
 }
 
 void OpenGLRenderer::DSPassLighting() {
