@@ -1,5 +1,3 @@
-
-
 #include <format>
 #include <chrono>
 #include <iostream>
@@ -90,8 +88,22 @@ namespace Refraction {
 
 	void Log::GenerateLog(const std::string& logName, const std::string &message, const std::string& logType, const Colour printColour, const bool printStack, Colour typeColour) {
 
+		const std::string timestamp = GenerateTimestamp();
+		if (!Common::RuntimeExternalReady) {
+			// Skip cpptrace and just print text
+
+			for (auto& callback : Callbacks) {
+				callback(timestampColour, "[" + timestamp + "]", true);
+				callback(separatorColour, " - ", false);
+				callback(typeColour, logType + " ", false);
+				callback(separatorColour, " - ", false);
+				callback(printColour, message, false);
+			}
+
+			return;
+		}
+
 		// Get print information
-		const std::string timestamp = Refraction::Log::GenerateTimestamp();
 		auto [frames] = cpptrace::stacktrace::current();
 
 		// Use 3rd frame if not lambda (otherwise 4th)

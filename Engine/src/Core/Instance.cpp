@@ -5,6 +5,7 @@ Settings* Settings::CurrentSettings = new Settings();
 namespace Refraction::Engine {
 	Instance::Instance() {
 		try {
+			Common::RuntimeExternalReady = true;
 			Log::InitConsoleLog();
 			mWindow = Platform::AWindow::Get();
 			mWindow->Init();

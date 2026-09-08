@@ -49,7 +49,7 @@ namespace Refraction::Assets {
 		// Loads metadata from the given string
 		virtual void Deserialise(std::string data);
 	};
-
+	
 	class Asset {
 	public:
 		Asset() = default;

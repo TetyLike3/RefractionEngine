@@ -3,6 +3,8 @@ project(Editor VERSION 1.0 LANGUAGES CXX)
 
 add_executable(Editor)
 
+set(TEST_ENV_DIR "${CMAKE_SOURCE_DIR}/TestEnvironment")
+
 file(GLOB_RECURSE EDITOR_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 target_sources(Editor PRIVATE ${EDITOR_SOURCES})
 
@@ -51,7 +53,23 @@ target_link_libraries(Editor
         #Runtime
 )
 
-if(MINGW)
-    target_link_options(Editor PRIVATE -Wl,--allow-shlib-undefined)
-    target_link_libraries(Editor PRIVATE mingwex ucrt)
+
+# Post build
+add_custom_command(
+        TARGET Editor POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "$<TARGET_FILE:Editor>"
+        "${TEST_ENV_DIR}/$<TARGET_FILE_NAME:Editor>"
+        COMMENT "Copying editor binary"
+)
+
+file(GLOB ALL_DLLS "${CMAKE_SOURCE_DIR}/Libs/x64_Debug/*.dll")
+if(ALL_DLLS)
+    add_custom_command(
+            TARGET Editor POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${ALL_DLLS}
+            "${TEST_ENV_DIR}"
+            COMMENT "Copying DLLs"
+    )
 endif()

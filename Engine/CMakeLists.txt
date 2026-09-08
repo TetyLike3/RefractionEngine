@@ -69,7 +69,3 @@ target_link_directories(Engine
 if(WIN32)
 	target_compile_definitions(Engine PUBLIC RFCT_PLATFORM_WINDOWS)
 endif()
-
-if(MINGW)
-	target_link_libraries(Engine PRIVATE mingwex msvcrt)
-endif()

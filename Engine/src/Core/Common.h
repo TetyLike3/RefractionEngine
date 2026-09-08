@@ -66,6 +66,9 @@ namespace Refraction {
 		public:
 			RuntimeError(const std::string& msg);
 		};
+
+		// Use to prevent calls to external libraries during pre-main() initialisation
+		static inline bool RuntimeExternalReady = false;
 	}
 
 	class Log {
