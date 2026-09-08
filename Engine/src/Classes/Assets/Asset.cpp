@@ -1,4 +1,5 @@
 #include <json.hpp>
+#include <utility>
 
 #include <Core/FileHandling.h>
 #include <Classes/ClassSerialiser.h>
@@ -8,7 +9,7 @@
 #include "Asset.h"
 
 namespace Refraction::Assets {
-	Common::Shared<AssetMetadata> AssetMetadata::CastedDeserialise(std::string data) {
+	Common::Shared<AssetMetadata> AssetMetadata::CastedDeserialise(const std::string& data) {
 		MetadataType metaType;
 		Utilities::ClassSerialiser::TryParseJSON(data, [&](nlohmann::json& json) {
 			for (int i = 0; i < (int)MetadataType::COUNT; i++) {
@@ -56,7 +57,7 @@ namespace Refraction::Assets {
 	}
 
 	void AssetMetadata::Deserialise(std::string data) {
-		Utilities::ClassSerialiser::TryParseJSON(data, [&](nlohmann::json& json) {
+		Utilities::ClassSerialiser::TryParseJSON(std::move(data), [&](nlohmann::json& json) {
 			AssetUUID = UUID::Deserialise(json["AssetUUID"]);
 			for (int i = 0; i < (int)MetadataType::COUNT; i++) {
 				if (json["MetadataType"] == MetadataTypeName[i]) {
@@ -71,11 +72,11 @@ namespace Refraction::Assets {
 		});
 	}
 
-	Asset::~Asset() {}
+	Asset::~Asset() = default;
 
 	void Asset::LoadAsset(UUIDValue uuid) {
 		Common::Ref<AssetMetadata> metaWeak;
-		Engine::AssetManager::Try([&](Common::Shared<Engine::AssetManager> assetManager) {
+		Engine::AssetManager::Try([&](const auto& assetManager) {
 			metaWeak = assetManager->FetchMetadata(uuid);
 		});
 
@@ -96,7 +97,7 @@ namespace Refraction::Assets {
 
 	void Asset::MakeVolatile() {
 		mVolatile = true;
-		mUUID = UUID::UUID();
+		mUUID = UUID();
 
 		OnMakeVolatile();
 	}

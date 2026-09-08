@@ -1,13 +1,12 @@
 #include <format>
+#include <utility>
 
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui/imgui.h>
 
 #include <Settings.h>
-#include <Classes/Components/APhysics.h>
-#include <Classes/Assets/Shader.h>
 #include <EditorState.h>
-#include <EditorNet.h>
+//#include <EditorNet.h>
 #include <EditorTheme.h>
 #include <ImGuiExtension.h>
 #include <EditorPlatform/ADialogs.h>
@@ -18,7 +17,7 @@
 namespace Refraction::Editor {
 	using Engine::Platform::WindowInputState;
 
-	Platform::AImGuiImpl::AImGuiImpl(Common::Shared<Engine::Platform::AWindow> window) : mWindow(window) {
+	Platform::AImGuiImpl::AImGuiImpl(Common::Shared<Engine::Platform::AWindow> window) : mWindow(std::move(window)) {
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 

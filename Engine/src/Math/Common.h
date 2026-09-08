@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+#include <cmath>
 #include <algorithm>
 
 namespace Refraction::Math {

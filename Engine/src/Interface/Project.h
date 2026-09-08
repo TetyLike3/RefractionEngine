@@ -27,7 +27,7 @@ namespace Refraction::Engine {
 	bool SaveProjectData(const std::filesystem::path& projectFilePath, const ProjectData& projectData);
 
 	std::optional<ProjectData> LoadProjectData(const std::filesystem::path& projectFilePath);
-	inline std::filesystem::path GetProjectFilePath(const std::filesystem::path& projectPath);
+	std::filesystem::path GetProjectFilePath(const std::filesystem::path& projectPath);
 
 	enum class RemoteProjectCommand {
 		AddObject,
@@ -59,9 +59,9 @@ namespace Refraction::Engine {
 		// Loads a scene under the active project, returns success
 		bool OpenScene(UUID sceneUUID);
 		// Returns the currently open scene
-		inline Common::Ref<Objects::SceneRoot> GetActiveScene() const { return mActiveScene; }
+		[[nodiscard]] inline Common::Ref<Objects::SceneRoot> GetActiveScene() const { return mActiveScene; }
 		// Returns all scenes under this project
-		inline std::vector<Common::Ref<Objects::SceneRoot>> GetScenes() const {
+		[[nodiscard]] inline std::vector<Common::Ref<Objects::SceneRoot>> GetScenes() const {
 			std::vector<Common::Ref<Objects::SceneRoot>> vec;
 			for (auto& scene : mProjectData.Scenes) {
 				vec.push_back(Common::NewRef(scene));
@@ -69,17 +69,17 @@ namespace Refraction::Engine {
 			return vec;
 		}
 		// Returns all global objects under this project
-		inline std::vector<Common::Ref<Objects::AObject>> GetGlobalObjects() const {
+		[[nodiscard]] inline std::vector<Common::Ref<Objects::AObject>> GetGlobalObjects() const {
 			std::vector<Common::Ref<Objects::AObject>> vec;
 			for (auto& obj : mProjectData.GlobalObjects) {
 				vec.push_back(Common::NewRef(obj));
 			}
 			return vec;
 		}
-		inline std::filesystem::path GetFilePath() const { return GetProjectFilePath(mProjectPath); }
+		[[nodiscard]] inline std::filesystem::path GetFilePath() const { return GetProjectFilePath(mProjectPath); }
 
-		inline bool IsLoaded() const { return !mProjectPath.empty(); }
-		inline bool IsRemote() const { return mProjectData.IsRemote; }
+		[[nodiscard]] inline bool IsLoaded() const { return !mProjectPath.empty(); }
+		[[nodiscard]] inline bool IsRemote() const { return mProjectData.IsRemote; }
 	private:
 		std::filesystem::path mProjectPath;
 		ProjectData mProjectData;

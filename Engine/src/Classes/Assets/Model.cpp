@@ -13,7 +13,7 @@ namespace Refraction::Assets {
 	Common::Shared<Engine::Platform::AMeshFragment> ProcessMesh(std::string& sourcePath, std::vector<Common::Ref<Assets::Material>>& materials, aiMesh* mesh, const aiScene* scene);
 	std::vector<Common::Ref<Assets::Image>> LoadMaterialTextures(std::string& sourcePath, aiMaterial* mat, aiTextureType type, std::string typeName);
 
-	static void ProcessNode(std::string sourcePath, std::vector<Common::Ref<Assets::Material>>& materials, std::vector<Common::Shared<Engine::Platform::AMeshFragment>>& fragments, aiNode* node, const aiScene* scene) {
+	void ProcessNode(std::string sourcePath, std::vector<Common::Ref<Assets::Material>>& materials, std::vector<Common::Shared<Engine::Platform::AMeshFragment>>& fragments, aiNode* node, const aiScene* scene) {
 		for (unsigned int i = 0; i < node->mNumMeshes; i++) {
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 			fragments.push_back(ProcessMesh(sourcePath, materials, mesh, scene));
@@ -24,7 +24,7 @@ namespace Refraction::Assets {
 		}
 	}
 
-	static Common::Shared<Engine::Platform::AMeshFragment> ProcessMesh(std::string& sourcePath, std::vector<Common::Ref<Assets::Material>>& materials, aiMesh* mesh, const aiScene* scene) {
+	Common::Shared<Engine::Platform::AMeshFragment> ProcessMesh(std::string& sourcePath, std::vector<Common::Ref<Assets::Material>>& materials, aiMesh* mesh, const aiScene* scene) {
 		std::vector<Engine::sVertex> vertices;
 		std::vector<unsigned int> indices;
 		std::vector<Common::Shared<Assets::Image>> diffuseMaps;
@@ -58,7 +58,7 @@ namespace Refraction::Assets {
 		return Engine::Platform::AMeshFragment::MakeMeshFragment(vertices, indices, materials[mesh->mMaterialIndex]);
 	}
 
-	static std::vector<Common::Ref<Assets::Image>> LoadMaterialTextures(std::string& sourcePath, aiMaterial* mat, aiTextureType type, std::string typeName) {
+	std::vector<Common::Ref<Assets::Image>> LoadMaterialTextures(std::string& sourcePath, aiMaterial* mat, aiTextureType type, std::string typeName) {
 		std::vector<Common::Ref<Assets::Image>> textures;
 		Engine::AssetManager::Try([&](Common::Shared<Engine::AssetManager> assetManager) {
 			for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {

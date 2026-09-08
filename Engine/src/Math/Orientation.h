@@ -78,7 +78,7 @@ namespace Refraction::Math {
 
 		void Rotate(float pitch, float yaw, float roll);
 
-		Orientation Rotate(float angle, Vector3 axis) const;
+		Orientation Rotate(float angle, const Vector3 &axis) const;
 
 		inline std::string ToString(PrintFormatArgs fmtArgs = PrintFormatArgs()) const {
 			if (fmtArgs.Pretty) {

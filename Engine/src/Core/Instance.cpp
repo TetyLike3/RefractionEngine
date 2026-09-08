@@ -3,7 +3,7 @@
 Settings* Settings::CurrentSettings = new Settings();
 
 namespace Refraction::Engine {
-	Instance::Instance(Platform::WindowProperties windowProps) {
+	Instance::Instance() {
 		try {
 			Log::InitConsoleLog();
 			mWindow = Platform::AWindow::Get();

@@ -3,8 +3,6 @@
 #include "AssetManager.h"
 
 namespace Refraction::Engine {
-	Common::Shared<AssetManager> AssetManager::Instance = nullptr;
-
 	void AssetManager::RegisterAllAssets() {
 		Log::SInfo("Registering all assets in project...");
 		RecursiveRegisterAssets(mProjectPath / "Assets");

@@ -12,23 +12,23 @@ namespace Refraction::Engine {
 		// CAUTION: Will replace the previous instance
 		template <typename... Args>
 		static inline Common::Ref<Derived> MakeInstance(Args&&... args) {
-			Instance = Common::NewShared<Derived>(std::forward<Args>(args)...);
+			SingletonInstance = Common::NewShared<Derived>(std::forward<Args>(args)...);
 			return GetInstance();
 		}
 
 		// Returns a reference to the singleton
-		static inline Common::Ref<Derived> GetInstance() { return Instance; }
+		static inline Common::Ref<Derived> GetInstance() { return SingletonInstance; }
 
 		// Access wrapper with some error handling
 		static inline void Try(std::function<void(Common::Shared<Derived> singleton)> f) {
-			if (Instance) {
-				f(Instance);
+			if (SingletonInstance) {
+				f(SingletonInstance);
 			} else {
 				throw Common::RuntimeError("No instance exists");
 			}
 		}
 
 	private:
-		static Common::Shared<Derived> Instance;
+		inline static Common::Shared<Derived> SingletonInstance = nullptr;
 	};
 }

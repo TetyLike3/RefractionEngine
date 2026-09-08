@@ -16,7 +16,7 @@ namespace Refraction::Math {
 		while (mRoll > 360) mRoll -= 360;
 	}
 
-	Orientation Orientation::Rotate(float angle, Vector3 axis) const {
+	Orientation Orientation::Rotate(float angle, const Vector3& axis) const {
 		auto result = (Matrix4::FromRotation(*this) * Matrix4::FromRotation(angle, axis)).ToOrientation();
 		result.ClearNaNs();
 		return result;

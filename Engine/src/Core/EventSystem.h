@@ -8,6 +8,7 @@ namespace Refraction::Events {
 	class Event {
 	public:
 		Event() = default;
+		virtual ~Event() = default;
 
 		virtual std::string GetName() const { return mName; }
 		virtual void Consume() { mConsumed = true; }

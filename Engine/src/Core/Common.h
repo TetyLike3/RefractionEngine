@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include <vector>
 #include <string>
 #include <functional>
@@ -47,7 +48,7 @@ namespace Refraction {
 		}
 		template<typename T, typename O>
 		constexpr bool IsA(O&& object) {
-			return dynamic_cast<T*>(object) != 0;
+			return dynamic_cast<T*>(object) != nullptr;
 		}
 		template<typename T, typename O>
 		constexpr T* AsA(Shared<O> object) {
@@ -55,15 +56,15 @@ namespace Refraction {
 		}
 		template<typename T, typename O>
 		constexpr bool IsA(Shared<O> object) {
-			return dynamic_cast<T*>(object.get()) != 0;
+			return dynamic_cast<T*>(object.get()) != nullptr;
 		}
 
 		template <typename Base, typename Target>
-		concept DerivesFrom = std::is_base_of<Base, Target>::value;
+		concept DerivesFrom = std::is_base_of_v<Base, Target>;
 
 		class RuntimeError : public std::runtime_error {
 		public:
-			RuntimeError(std::string msg);
+			RuntimeError(const std::string& msg);
 		};
 	}
 
@@ -82,7 +83,7 @@ namespace Refraction {
 		static void SInfo(std::string message);
 		static void SWarn(std::string message);
 		static void SError(std::string message);
-		static void AddLogCallback(LogCallback callback) { Callbacks.push_back(callback); }
+		static void AddLogCallback(const LogCallback& callback) { Callbacks.push_back(callback); }
 		static void InitConsoleLog();
 
 		static Log Render;
@@ -91,28 +92,28 @@ namespace Refraction {
 		static Log Editor;
 
 		Log() : mName("Refraction") {}
-		Log(std::string name) : mName(name) {}
+		Log(std::string name) : mName(std::move(name)) {}
 
 		void Info(std::string message);
 		template<typename... Args>
 		void Info(std::string format, Args&&... args) {
-			Info(std::format(format, args));
+			Info(std::format(format, args...));
 		}
 		void Warn(std::string message);
 		template<typename... Args>
 		void Warn(std::string format, Args&&... args) {
-			Warn(std::format(format, args));
+			Warn(std::format(format, args...));
 		}
 		void Error(std::string message);
 		template<typename... Args>
 		void Error(std::string format, Args&&... args) {
-			Error(std::format(format, args));
+			Error(std::format(format, args...));
 		}
 	protected:
 		static std::vector<LogCallback> Callbacks;
 		std::string mName;
 	private:
-		static void GenerateLog(std::string logName, std::string message, std::string logType, Colour printColour, bool printStack = false, Colour typeColour = { 0,0,0 });
+		static void GenerateLog(const std::string& logName, const std::string &message, const std::string& logType, Colour printColour, bool printStack = false, Colour typeColour = { 0,0,0 });
 	};
 
 }

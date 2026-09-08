@@ -11,7 +11,7 @@
 namespace Refraction::Engine {
 	class Instance {
 	public:
-		Instance(Platform::WindowProperties windowProps = Platform::WindowProperties());
+		Instance();
 		virtual ~Instance() = default;
 		void Start();
 		void End();

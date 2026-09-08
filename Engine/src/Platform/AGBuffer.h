@@ -28,7 +28,7 @@ namespace Refraction::Engine::Platform {
 		virtual void BindTextures() = 0;
 
 	protected:
-		static const unsigned int TextureCount = 6;
+		static constexpr unsigned int TextureCount = 6;
 
 		unsigned int mFBID = 0;
 		Common::Ref<Platform::ATexture> mDiffuse;

@@ -11,7 +11,7 @@ namespace Refraction::Math {
 		Vector3 GridIndex = Vector3::Zero();
 		Vector3 CellPosition = Vector3::Zero();
 
-		inline Vector3 ToWorld() const { return CellPosition + (GridIndex * SpatialCellSize); }
+		[[nodiscard]] inline Vector3 ToWorld() const { return CellPosition + (GridIndex * SpatialCellSize); }
 		void Translate(Vector3 delta);
 	};
 
@@ -29,7 +29,7 @@ namespace Refraction::Math {
 		// Creates a Transform from a Matrix4
 		static Transform FromMatrix(Matrix4& mat);
 
-		inline void Translate(Vector3 delta) { mSpatialPosition.Translate(delta); }
+		inline void Translate(const Vector3 &delta) { mSpatialPosition.Translate(delta); }
 		// Rotate using an angle (degrees) axis
 		void Rotate(float angle, Vector3 axis);
 		// Rotate using Euler angles (degrees)
@@ -41,13 +41,13 @@ namespace Refraction::Math {
 		void LookAt(Vector3 target, Vector3 targetUp = Vector3::Up());
 
 		// Generates the Transform's matrix
-		Matrix4 ToMatrix() const;
-		inline Vector3 GetWorldPosition() const { return mSpatialPosition.ToWorld(); }
-		inline Vector3 GetForwardVector() const { return mOrientation.ForwardVector(); }
-		inline Vector3 GetRightVector() const { return mOrientation.RightVector(); }
-		inline Vector3 GetUpVector() const { return mOrientation.UpVector(); }
+		[[nodiscard]] Matrix4 ToMatrix() const;
+		[[nodiscard]] inline Vector3 GetWorldPosition() const { return mSpatialPosition.ToWorld(); }
+		[[nodiscard]] inline Vector3 GetForwardVector() const { return mOrientation.ForwardVector(); }
+		[[nodiscard]] inline Vector3 GetRightVector() const { return mOrientation.RightVector(); }
+		[[nodiscard]] inline Vector3 GetUpVector() const { return mOrientation.UpVector(); }
 
-		inline std::string ToString(PrintFormatArgs fmtArgs = PrintFormatArgs()) const {
+		[[nodiscard]] inline std::string ToString(PrintFormatArgs fmtArgs = PrintFormatArgs()) const {
 			auto gridIndexStr = mSpatialPosition.GridIndex.ToString({ .AsInt = true, .Pretty = fmtArgs.Pretty });
 			auto cellPosStr = mSpatialPosition.CellPosition.ToString({ .AsInt = fmtArgs.AsInt, .Pretty = fmtArgs.Pretty });
 			auto orientationStr = mOrientation.ToString({ .AsInt = fmtArgs.AsInt, .Pretty = fmtArgs.Pretty });

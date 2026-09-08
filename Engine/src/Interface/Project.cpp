@@ -11,8 +11,6 @@
 #include "Project.h"
 
 namespace Refraction::Engine {
-	Common::Shared<Project> Project::Instance = nullptr;
-
 	bool SaveProjectData(const std::filesystem::path& projectFilePath, const ProjectData& projectData) {
 		auto pathStr = projectFilePath.string();
 		if (!(projectFilePath.has_extension() && projectFilePath.extension() == RFCT_PROJECT_EXTENSION)) {

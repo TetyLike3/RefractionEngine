@@ -1,14 +1,13 @@
 
+
 #include <format>
 #include <chrono>
 #include <iostream>
 #include <filesystem>
 
-#include <glm/gtc/quaternion.hpp>
-#include <cpptrace/cpptrace.hpp>
-#include <cpptrace/formatting.hpp>
-
 #include "Common.h"
+
+import cpptrace;
 
 #ifdef _DEBUG
 #define DEFAULT_LOG_FRAME 2
@@ -21,25 +20,25 @@ namespace {
 	std::string ANSI24RGB(Log::Colour colour) {
 		return std::format("\033[38;2;{};{};{}m", colour.R, colour.G, colour.B);
 	};
-	Log::Colour white = { 255,255,255 };
-	Log::Colour black = { 0,0,0 };
+	Log::Colour white = { .R = 255,.G = 255,.B = 255 };
+	Log::Colour black = { .R = 0,.G = 0,.B = 0 };
 	Log::Colour separatorColour = white;
 	Log::Colour threadColour = white;
-	Log::Colour timestampColour = { 64, 210, 255 };
-	Log::Colour classColour = { 110, 255, 124 };
-	Log::Colour functionColour = { 96, 200, 96 };
+	Log::Colour timestampColour = { .R = 64, .G = 210, .B = 255 };
+	Log::Colour classColour = { .R = 110, .G = 255, .B = 124 };
+	Log::Colour functionColour = { .R = 96, .G = 200, .B = 96 };
 	std::string separatorStr = ANSI24RGB(separatorColour) + " - ";
 	std::string threadColourStr = ANSI24RGB(threadColour);
 	std::string timestampColourStr = ANSI24RGB(timestampColour);
 	std::string classColourStr = ANSI24RGB(classColour);
 	std::string functionColourStr = ANSI24RGB(functionColour);
 
-	std::string LastClassPrinted = "";
-	std::string LastMessagePrinted = "";
+	std::string LastClassPrinted;
+	std::string LastMessagePrinted;
 }
 
 namespace Refraction {
-	void OnConsoleLog(Log::Colour colour, std::string message, bool newLine) {
+	static void OnConsoleLog(const Log::Colour colour, const std::string& message, const bool newLine) {
 		using std::vformat, std::make_format_args, std::clog;
 
 		if (newLine) clog << '\n';
@@ -66,13 +65,13 @@ namespace Refraction {
 	};
 
 	void Log::SInfo(std::string message) {
-		GenerateLog("Refraction", message, "INFO", white, false, Colour{ 200, 255, 255 });
+		GenerateLog("Refraction", message, "INFO", white, false, Colour{ .R = 200, .G = 255, .B = 255 });
 	}
 	void Log::SWarn(std::string message) {
-		GenerateLog("Refraction", message, "WARN", Colour{ 255, 160, 70 });
+		GenerateLog("Refraction", message, "WARN", Colour{ .R = 255, .G = 160, .B = 70 });
 	}
 	void Log::SError(std::string message) {
-		GenerateLog("Refraction", message, "ERR", Colour{ 255, 60, 60 }, true);
+		GenerateLog("Refraction", message, "ERR", Colour{ .R = 255, .G = 60, .B = 60 }, true);
 	}
 
 	void Log::InitConsoleLog() {
@@ -80,20 +79,20 @@ namespace Refraction {
 	}
 
 	void Log::Info(std::string message) {
-		GenerateLog(mName, message, "INFO", white, false, Colour{ 200, 255, 255 });
+		GenerateLog(mName, message, "INFO", white, false, Colour{ .R = 200, .G = 255, .B = 255 });
 	}
 	void Log::Warn(std::string message) {
-		GenerateLog(mName, message, "WARN", Colour{ 255, 160, 70 });
+		GenerateLog(mName, message, "WARN", Colour{ .R = 255, .G = 160, .B = 70 });
 	}
 	void Log::Error(std::string message) {
-		GenerateLog(mName, message, "ERR", Colour{ 255, 60, 60 }, true);
+		GenerateLog(mName, message, "ERR", Colour{ .R = 255, .G = 60, .B = 60 }, true);
 	}
 
-	void Log::GenerateLog(std::string logName, std::string message, std::string logType, Colour printColour, bool printStack, Colour typeColour) {
+	void Log::GenerateLog(const std::string& logName, const std::string &message, const std::string& logType, const Colour printColour, const bool printStack, Colour typeColour) {
 
 		// Get print information
-		std::string timestamp = Refraction::Log::GenerateTimestamp();
-		auto trace = cpptrace::stacktrace::current();
+		const std::string timestamp = Refraction::Log::GenerateTimestamp();
+		auto [frames] = cpptrace::stacktrace::current();
 
 		// Use 3rd frame if not lambda (otherwise 4th)
 		int frameIndex = DEFAULT_LOG_FRAME;
@@ -104,7 +103,7 @@ namespace Refraction {
 		std::string className = "[unknown]";
 		bool testLambda = true;
 		while (testLambda) {
-			callerSymbol = cpptrace::prune_symbol(trace.frames[frameIndex].symbol);
+			callerSymbol = cpptrace::prune_symbol(frames[frameIndex].symbol);
 
 			// cpptrace doesn't seem to prune properly in release builds so we gotta do some manual pruning
 			if (auto symbolPos = callerSymbol.find_last_of('('); symbolPos != std::string::npos) {
@@ -166,8 +165,8 @@ namespace Refraction {
 				callback(separatorColour, " - ", false);
 				callback(printColour, message, false);
 				callback(printColour, "Stack trace, recent first:", true);
-				for (size_t i = 2; i < trace.frames.size(); i++) {
-					auto& frame = trace.frames[i];
+				for (size_t i = 2; i < frames.size(); i++) {
+					auto& frame = frames[i];
 					if (frame.symbol == "main()") break; // stop after reaching entrypoint
 					callback(printColour, std::format("#{} ", i-2), true);
 					callback({ 255, 160, 70 }, frame.symbol, false);
@@ -197,7 +196,7 @@ namespace Refraction {
 	Log Log::Runtime = Log("Runtime");
 	Log Log::Editor = Log("Editor");
 
-	Common::RuntimeError::RuntimeError(std::string msg) : std::runtime_error(msg) {
+	Common::RuntimeError::RuntimeError(const std::string& msg) : std::runtime_error(msg) {
 		// Log here to produce a better stacktrace
 		Log::SError("A runtime error occured.");
 	}

@@ -11,7 +11,7 @@ namespace Refraction {
 	class UUID {
 	public:
 		// Returns a UUID equivalent to null
-		static UUID Null() { return UUID(0); }
+		static UUID Null() { return {0}; }
 
 		// Initialises a UUID using its int64 value and adds it to the generator history
 		// Note: Returns a null UUID if the provided UUID is already in generator history, unless specified not to
@@ -38,15 +38,15 @@ namespace Refraction {
 		~UUID() { Reset(); };
 
 		// Returns a string with each section seperated by dashes
-		std::string AsString() const;
+		[[nodiscard]] std::string AsString() const;
 		// Returns a 64-bit integer of each 16-bit section concatenated
-		UUIDValue AsInt() const;
+		[[nodiscard]] UUIDValue AsInt() const;
 		// Zeroes all values (becomes a null UUID) and allows another to take the generated UUID
 		void Reset();
 		// Returns true if valid (not null)
-		bool IsValid() const { return (*this) != Null(); }
+		[[nodiscard]] bool IsValid() const { return (*this) != Null(); }
 		// Returns the UUID serialised
-		std::string Serialise() const;
+		[[nodiscard]] std::string Serialise() const;
 
 		bool operator==(const UUID& other) const { return AsInt() == other.AsInt(); }
 		bool operator!=(const UUID& other) const { return AsInt() != other.AsInt(); }

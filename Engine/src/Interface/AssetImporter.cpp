@@ -31,7 +31,7 @@ namespace Refraction::Engine {
 		// Make metadata file
 		Assets::AssetMetadata meta{};
 		meta.MetaType = Assets::MetadataType::Asset;
-		meta.AssetUUID = UUID::UUID();
+		meta.AssetUUID = UUID();
 		meta.AssetPath = dstName;
 		meta.SourcePath = sourcePath;
 		meta.FileSize = std::filesystem::file_size(dstName);

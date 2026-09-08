@@ -5,7 +5,7 @@
 namespace Refraction::Engine::Platform {
 	class OpenGLTexture : public ATexture {
 	public:
-		static Common::Shared<ATexture> GetFromPath(std::filesystem::path path);
+		static Common::Shared<ATexture> GetFromPath(const std::filesystem::path &path);
 		static Common::Shared<ATexture> GetFromID(unsigned int id);
 
 		OpenGLTexture(const TextureStructure& texStruct);

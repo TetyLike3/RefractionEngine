@@ -6,11 +6,10 @@
 #include "OpenGLTexture.h"
 
 namespace Refraction::Engine::Platform {
-	Common::Shared<ATexture> OpenGLTexture::GetFromPath(std::filesystem::path path) {
+	Common::Shared<ATexture> OpenGLTexture::GetFromPath(const std::filesystem::path& path) {
 		stbi_set_flip_vertically_on_load(true);
 		int w, h, c;
-		unsigned char* data = stbi_load(path.string().c_str(), &w, &h, &c, 0);
-		if (data) {
+		if (unsigned char* data = stbi_load(path.string().c_str(), &w, &h, &c, 0)) {
 			auto texStruct = TextureStructure{
 				.Width = w,
 				.Height = h,
@@ -43,12 +42,12 @@ namespace Refraction::Engine::Platform {
 	}
 
 	OpenGLTexture::OpenGLTexture(const TextureStructure& texStruct) {
-		Generate();
-		Regenerate(texStruct);
+		OpenGLTexture::Generate();
+		OpenGLTexture::Regenerate(texStruct);
 	}
 
-	OpenGLTexture::OpenGLTexture(unsigned int id) {
-		if (!glIsTexture(id)) throw std::runtime_error(std::string("Failed to create reference to texture, ID" + id) + "is invalid");
+	OpenGLTexture::OpenGLTexture(const unsigned int id) {
+		if (!glIsTexture(id)) throw Common::RuntimeError("Failed to create reference to texture, ID " + std::to_string(id) + " is invalid");
 		mBufferID = id;
 	}
 
@@ -107,7 +106,7 @@ namespace Refraction::Engine::Platform {
 
 		Activate(0);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, iFmt, texStruct.Width, texStruct.Height, 0, fmt, type, 0);
+		glTexImage2D(GL_TEXTURE_2D, 0, iFmt, texStruct.Width, texStruct.Height, 0, fmt, type, nullptr);
 		if (texStruct.MipsEnabled) {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -125,7 +124,7 @@ namespace Refraction::Engine::Platform {
 		glBindTexture(GL_TEXTURE_2D, mBufferID);
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
-		return Math::Vector2(w, h);
+		return {w, h};
 	}
 }
 

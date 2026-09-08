@@ -36,7 +36,7 @@ namespace Refraction::Assets {
 		uintmax_t FileSize = 0;
 
 		// Returns a deserialised (derived) AssetMetadata object
-		static Common::Shared<AssetMetadata> CastedDeserialise(std::string data);
+		static Common::Shared<AssetMetadata> CastedDeserialise(const std::string &data);
 
 		AssetMetadata() = default;
 		~AssetMetadata() = default;

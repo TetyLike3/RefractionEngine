@@ -1,4 +1,6 @@
 #define WIN32_LEAN_AND_MEAN
+
+#include <format>
 #include <windows.h>
 #include <commdlg.h>
 #include <ShObjIdl.h>
@@ -6,7 +8,7 @@
 #include "Dialogs.h"
 
 namespace Refraction::Editor::Dialogs {
-	inline std::filesystem::path SelectFile(const char* ext, const char* title) {
+	std::filesystem::path SelectFile(const char* ext, const char* title) {
 		char buffer[MAX_PATH] = {};
 
 		std::string filter = std::format("{} Files", ext);
@@ -25,12 +27,12 @@ namespace Refraction::Editor::Dialogs {
 		options.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
 		if (GetOpenFileNameA(&options)) {
-			return std::filesystem::path(buffer);
+			return {buffer};
 		}
 
 		return {};
 	}
-	inline std::filesystem::path SelectFolder(const std::string& title) {
+	std::filesystem::path SelectFolder(const std::string& title) {
 		IFileDialog* pDialog = nullptr;
 		HRESULT hres = CoCreateInstance(CLSID_FileOpenDialog, nullptr, CLSCTX_ALL, IID_IFileDialog, reinterpret_cast<void**>(&pDialog));
 		if (FAILED(hres) || !pDialog) return {};

@@ -1,9 +1,3 @@
-#include <iostream>
-#include <thread>
-
-#include <GLAD/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <Core/Common.h>
 #include <Core/Instance.h>
 

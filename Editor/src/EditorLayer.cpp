@@ -1,13 +1,13 @@
 #include <Rendering/RenderLayer.h>
 #include <EditorState.h>
 #include <EditorTheme.h>
-#include <EditorNet.h>
+//#include <EditorNet.h>
 #include <EditorGUI/Panels/ExplorerPanel.h>
 #include <EditorGUI/Panels/PropertiesPanel.h>
 #include <EditorGUI/Panels/ViewportPanel.h>
 #include <EditorGUI/Panels/LogPanel.h>
 #include <EditorGUI/Panels/StatsPanel.h>
-#include <EditorGUI/Panels/LiveCollabPanel.h>
+//#include <EditorGUI/Panels/LiveCollabPanel.h>
 
 #include "EditorLayer.h"
 
@@ -22,7 +22,7 @@ namespace Refraction::Editor {
 		mEditorPanels.push_back(Common::NewURef<GUI::ViewportPanel>(eventDispatcher, mWindow));
 		mEditorPanels.push_back(Common::NewURef<GUI::LogPanel>(eventDispatcher, mWindow));
 		mEditorPanels.push_back(Common::NewURef<GUI::StatsPanel>(eventDispatcher, mWindow));
-		mEditorPanels.push_back(Common::NewURef<GUI::LiveCollabPanel>(eventDispatcher, mWindow));
+		//mEditorPanels.push_back(Common::NewURef<GUI::LiveCollabPanel>(eventDispatcher, mWindow));
 	}
 
 	void EditorLayer::OnAttach() {
