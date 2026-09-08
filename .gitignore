@@ -400,4 +400,6 @@ FodyWeavers.xsd
 
 # Don't ignore resources
 !/Rendering/Resources/**/*.obj
+
+# Ignore testenv
 TestEnvironment
